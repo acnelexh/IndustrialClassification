@@ -5,6 +5,8 @@ from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
 import mmcv
 import numpy as np
 from mmcv import FileClient
+import cv2 as cv
+from pathlib import Path
 
 from .base_dataset import BaseDataset
 from .builder import DATASETS
@@ -221,6 +223,8 @@ class CustomDataset(BaseDataset):
             info = {'img_prefix': self.data_prefix}
             info['img_info'] = {'filename': filename}
             info['gt_label'] = np.array(gt_label, dtype=np.int64)
+            # add to read from img
+            info['img'] = cv.imread(str(Path(self.data_prefix)/filename)).astype(np.float32)
             data_infos.append(info)
         return data_infos
 

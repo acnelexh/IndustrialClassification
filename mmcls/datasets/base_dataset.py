@@ -172,6 +172,20 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
         average_mode = metric_options.get('average_mode', 'macro')
 
         if 'accuracy' in metrics:
+            # 把结果写道save_name的csv里面========================================
+            import pdb
+            save_name = "test_result_wire.csv"
+            import pandas as pd
+            filename = [x['img_info']['filename'] for x in self.data_infos]
+            m_dict = {
+                "filename": filename,
+                "results": np.argmax(results, axis=1),
+                "gt_labels": gt_labels
+            }
+            df = pd.DataFrame.from_dict(m_dict)
+            df.to_csv(save_name, index=False)
+            #pdb.set_trace()
+            #=====================================================================
             if thrs is not None:
                 acc = accuracy(results, gt_labels, topk=topk, thrs=thrs)
             else:

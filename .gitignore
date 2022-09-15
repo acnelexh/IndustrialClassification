@@ -132,3 +132,9 @@ venv.bak/
 *.pvti-journal
 /cache_engine
 /report
+
+# Add on
+*.png
+format.json
+format_json.py
+result_csv/
